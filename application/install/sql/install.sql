@@ -31,6 +31,7 @@ CREATE TABLE `xwx_user` (
   `last_login_time` int(11) DEFAULT '0',
   `vip_expire_time` int(11) DEFAULT '0' COMMENT '会员到期时间',
   `pid`int(10) unsigned DEFAULT '0' COMMENT '上线用户ID',
+  `reg_ip` varchar(32) DEFAULT '' COMMENT '用户注册ip',
   PRIMARY KEY (`id`) USING BTREE,
   unique key `username` (`username`) ,
   key `mobile` (`mobile`) USING BTREE,
@@ -125,6 +126,7 @@ CREATE TABLE `xwx_banner` (
 DROP TABLE IF EXISTS `xwx_book`;
 CREATE TABLE `xwx_book` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `unique_id` varchar(100) NOT NULL COMMENT '漫画标识', 
   `book_name` varchar(50) NOT NULL COMMENT '漫画名',
   `nick_name` varchar(100) DEFAULT '' COMMENT '别名',
   `create_time` int(11) DEFAULT '0',
@@ -145,7 +147,8 @@ CREATE TABLE `xwx_book` (
   KEY `end` (`end`) USING BTREE,
   KEY `author_id` (`author_id`) USING BTREE,
   -- KEY `book_name` (`book_name`) USING BTREE
-  FULLTEXT KEY `fidx` (`book_name`,`summary`,`nick_name`,`author_name`) with parser ngram
+  FULLTEXT KEY `fidx` (`book_name`,`summary`,`nick_name`,`author_name`) with parser ngram,
+  UNIQUE KEY `unique_id`(`unique_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
